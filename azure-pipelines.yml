@@ -44,6 +44,15 @@ steps:
    $store.Add($cert)
    $store.Close()
   displayName: 'PowerShell Script to Sign' 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Installing Microsoft Engagement Framework..."
+      $msiPath = "$($env:USERPROFILE)\MicrosoftStoreServicesSDK.msi"
+      (New-Object Net.WebClient).DownloadFile('https://admediator.gallerycdn.vsassets.io/extensions/admediator/microsoftstoreservicessdk/10.0.5/1550117536112/MicrosoftStoreServicesSDK.msi', $msiPath)
+      cmd /c start /wait msiexec /i $msiPath /quiet
+      Write-Host "Installed" -ForegroundColor green
 - task: VSBuild@1
   displayName: 'Build VS'
   inputs:
