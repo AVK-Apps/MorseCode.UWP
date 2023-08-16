@@ -1,0 +1,75 @@
+# Universal Windows Platform
+# Build a Universal Windows Platform project using Visual Studio.
+# Add steps that test and distribute an app, save build artifacts, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x86|x64|ARM'
+  buildConfiguration: 'Release'
+  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+- task: DownloadSecureFile@1
+  displayName: 'Download Store Key'
+  inputs:
+    secureFile: MorseCode.UWP.pfx
+    retryCount: 5
+- task: CopyFiles@2
+  displayName: 'Copy Files to: MorseCode.UWP'
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)'
+    Contents: MorseCode.UWP.pfx
+    TargetFolder: MorseCode.UWP/
+- powershell: |
+   $pfxpath = 'MorseCode.UWP/MorseCode.UWP.pfx'
+   $password = 'AVKApps'
+   
+   Add-Type -AssemblyName System.Security
+   $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+   $cert.Import($pfxpath, $password, [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]"PersistKeySet")
+   $store = new-object system.security.cryptography.X509Certificates.X509Store -argumentlist "MY", CurrentUser
+   $store.Open([System.Security.Cryptography.X509Certificates.OpenFlags]"ReadWrite")
+   $store.Add($cert)
+   $store.Close()
+  displayName: 'PowerShell Script to Sign' 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Installing Microsoft Engagement Framework..."
+      $msiPath = "$($env:USERPROFILE)\MicrosoftStoreServicesSDK.msi"
+      (New-Object Net.WebClient).DownloadFile('https://admediator.gallerycdn.vsassets.io/extensions/admediator/microsoftstoreservicessdk/10.0.5/1550117536112/MicrosoftStoreServicesSDK.msi', $msiPath)
+      cmd /c start /wait msiexec /i $msiPath /quiet
+      Write-Host "Installed" -ForegroundColor green
+- task: VSBuild@1
+  displayName: 'Build VS'
+  inputs:
+    solution: '$(solution)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload'
+    platform: x64
+    clean: true
+    createLogFile: true
+    logFileVerbosity: detailed
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**\bin\$(BuildConfiguration)\**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
