@@ -127,21 +127,21 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <Button x:Name="ListButton" Grid.Row="4" ToolTipService.ToolTip="Learn">
+            <Button x:Name="ListButton" Grid.Row="4" ToolTipService.ToolTip="Learn" Click="LearnButton_Click">
                 <SymbolIcon Symbol="List"  />
-                <Button.Flyout>
+                <!--<Button.Flyout>
                     <Flyout Placement="Left">
                         <usercontrols:LearnUserControl Settings="{x:Bind Settings}"/>
                     </Flyout>
-                </Button.Flyout>
+                </Button.Flyout>-->
             </Button>
-            <Button Grid.Row="5" ToolTipService.ToolTip="About">
+            <Button Grid.Row="5" ToolTipService.ToolTip="About" Click="Button_Click" >
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF142;" />
-                <Button.Flyout>
-                    <Flyout Placement="Left">
-                        <usercontrols:AboutUserControl />
-                    </Flyout>
-                </Button.Flyout>
+                <!--<Button.Flyout>
+                <Flyout Placement="Left">
+                    <usercontrols:AboutUserControl />
+                </Flyout>
+                </Button.Flyout>-->
             </Button>
         </Grid>
     </Grid>

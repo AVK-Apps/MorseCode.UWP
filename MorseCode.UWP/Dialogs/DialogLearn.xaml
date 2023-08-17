@@ -1,12 +1,15 @@
-﻿<UserControl
-    x:Class="MorseCode.UWP.UserControls.LearnUserControl"
+﻿<ContentDialog
+    x:Class="MorseCode.UWP.Dialogs.DialogLearn"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    Title="Learn"
+    CloseButtonText="Close"
+    CloseButtonStyle="{ThemeResource DefaultButtonStyle}"
+    DefaultButton="Close">
 
     <Grid>
         <Grid.Resources>
@@ -32,7 +35,7 @@
             <TextBlock Grid.Column="1" Text="Morse"/>
             <TextBlock Grid.Column="2" Text="Play"/>
         </Grid>
-        <ScrollViewer Grid.Row="2">
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Height="600">
             <ItemsControl x:Name="MorseCodeItemsControl">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -64,5 +67,4 @@
         </ScrollViewer>
         <controls:MarkdownTextBlock Text="[Markdown Wiki](https://en.wikipedia.org/wiki/Morse_code)" Grid.Row="0" HorizontalAlignment="Right" LinkClicked="MarkdownTextBlock_LinkClicked" Background="Transparent"/>
     </Grid>
-</UserControl>
-
+</ContentDialog>
