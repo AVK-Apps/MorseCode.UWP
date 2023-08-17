@@ -4,10 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:usercontrols="using:MorseCode.UWP.UserControls"
     mc:Ignorable="d"
     Title="Learn"
     CloseButtonText="Close"
+    CornerRadius="8"
     CloseButtonStyle="{ThemeResource DefaultButtonStyle}"
     DefaultButton="Close">
 
@@ -16,55 +17,37 @@
             <Style TargetType="TextBlock">
                 <Setter Property="Margin" Value="12" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}" />
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Characters"/>
+            <TextBlock Text="Character(s)"/>
             <TextBlock Grid.Column="1" Text="Morse"/>
-            <TextBlock Grid.Column="2" Text="Play"/>
         </Grid>
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Height="600">
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Height="480">
             <ItemsControl x:Name="MorseCodeItemsControl">
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="FrameworkElement">
+                        <Setter Property="Margin" Value="0,2"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Margin" Value="12" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="18" />
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock>
-                                <Run Text="{Binding Key}" />
-                                <Run Text="{Binding Key, Converter={StaticResource StringToUpperCaseConverter}}" />
-                            </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Value}" FontSize="32"/>
-                            <Button Width="42" Height="42" CornerRadius="36" Grid.Column="2" Tag="{Binding Key}" Tapped="Button_Tapped" HorizontalAlignment="Center">
-                                <SymbolIcon Symbol="Play"/>
-                            </Button>
-                        </Grid>
+                        <usercontrols:HeaderTile Title="{Binding Key}" Description="{Binding Value}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+        <TextBlock Text="Click to Play" Grid.Row="3"/>
         <controls:MarkdownTextBlock Text="[Markdown Wiki](https://en.wikipedia.org/wiki/Morse_code)" Grid.Row="0" HorizontalAlignment="Right" LinkClicked="MarkdownTextBlock_LinkClicked" Background="Transparent"/>
     </Grid>
 </ContentDialog>

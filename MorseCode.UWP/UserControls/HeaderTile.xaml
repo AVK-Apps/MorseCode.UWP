@@ -4,76 +4,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Width="198"
-    Height="220">
+    mc:Ignorable="d" Width="256" Height="48">
 
-    <Grid
-        Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-        CornerRadius="8">
-        <Grid.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.ThemeDictionaries>
-                    <ResourceDictionary x:Key="Light">
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrush" Color="{ThemeResource ControlStrokeColorDefault}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="{ThemeResource ControlStrokeColorSecondary}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPressed" Color="{ThemeResource ControlStrokeColorDefault}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushDisabled" Color="{ThemeResource ControlStrokeColorDefault}" />
-                    </ResourceDictionary>
-                    <ResourceDictionary x:Key="Dark">
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrush" Color="{ThemeResource ControlStrokeColorDefault}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="{ThemeResource ControlStrokeColorSecondary}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPressed" Color="{ThemeResource ControlStrokeColorDefault}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushDisabled" Color="{ThemeResource ControlStrokeColorDefault}" />
-                    </ResourceDictionary>
-                    <ResourceDictionary x:Key="HighContrast">
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="{ThemeResource SystemColorButtonTextColor}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPressed" Color="{ThemeResource SystemColorButtonTextColor}" />
-                        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushDisabled" Color="{ThemeResource SystemColorButtonTextColor}" />
-                    </ResourceDictionary>
-                </ResourceDictionary.ThemeDictionaries>
-            </ResourceDictionary>
-        </Grid.Resources>
-        <HyperlinkButton
-            Padding="-1"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch"
-            AutomationProperties.LabeledBy="{Binding ElementName=TitleText}"
-            CornerRadius="{StaticResource OverlayCornerRadius}"
-            NavigateUri="{x:Bind Link, Mode=OneWay}">
-            <Grid
-                Padding="24"
-                VerticalAlignment="Stretch"
-                RowSpacing="16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <ContentPresenter
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="{x:Bind Source, Mode=OneWay}" />
-
-                <StackPanel
-                    Grid.Row="1"
-                    Orientation="Vertical"
-                    Spacing="4">
-                    <TextBlock
-                        x:Name="TitleText"
-                        FontSize="18"
-                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind Title, Mode=OneWay}" />
-                    <TextBlock
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind Description, Mode=OneWay}" />
-                </StackPanel>
-            </Grid>
-        </HyperlinkButton>
+    <Grid Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}" CornerRadius="{StaticResource OverlayCornerRadius}" Margin="8,0">
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
+                AutomationProperties.LabeledBy="{Binding ElementName=TitleText}" CornerRadius="{StaticResource OverlayCornerRadius}" Tapped="Button_Tapped" Tag="{x:Bind Title, Mode=OneWay}">
+            <Button.Content>
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+                            <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                            <Setter Property="HorizontalTextAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TitleText" Grid.Column="0">
+                            <Run Text="{x:Bind Title, Mode=OneWay}" />
+                            <Run Text="{x:Bind Title, Mode=OneWay, Converter={StaticResource StringToUpperCaseConverter}}" />
+                    </TextBlock>
+                    <TextBlock x:Name="DesctText" Grid.Column="1" Text="{x:Bind Description, Mode=OneWay}" FontSize="{StaticResource TextStyleExtraLargeFontSize}" />
+                </Grid>
+            </Button.Content>
+        </Button>
     </Grid>
 </UserControl>
