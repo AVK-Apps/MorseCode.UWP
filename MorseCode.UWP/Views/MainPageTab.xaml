@@ -4,11 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:usercontrols="using:MorseCode.UWP.UserControls"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
@@ -23,7 +22,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <CommandBar IsOpen="False" DefaultLabelPosition="Right" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+            <CommandBar IsOpen="False" DefaultLabelPosition="Right" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="64,0">
                 <AppBarToggleButton x:Name="ButtonSwitch" Icon="Switch" Label="Switch Translation Type" Checked="SwitchButton_Checked"  Unchecked="SwitchButton_Unchecked" >
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Checked">
@@ -86,26 +85,15 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton x:Name="ListButton" Icon="List" Label="Learn" >
-                    <AppBarButton.Flyout>
-                        <Flyout>
-                            <usercontrols:LearnUserControl Settings="{x:Bind Settings}"/>
-                        </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarButton Label="About">
+                <AppBarButton x:Name="ListButton" Icon="List" Label="Learn" Click="LearnButton_Click" />
+                <AppBarButton Label="About" Click="Button_Click" >
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF142;" />
                     </AppBarButton.Icon>
-                    <AppBarButton.Flyout>
-                        <Flyout>
-                            <usercontrols:AboutUserControl />
-                        </Flyout>
-                    </AppBarButton.Flyout>
                 </AppBarButton>
             </CommandBar>
-            <controls:DropShadowPanel Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" OffsetX="32">
-                <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="32,0,32,32" CornerRadius="8">
+            <controls:DropShadowPanel Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" OffsetX="64">
+                <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="64,0,64,64" CornerRadius="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="*" />
@@ -113,17 +101,24 @@
                     <TextBox x:Name="Editor" Style="{StaticResource TextBoxStyle}" TextChanging="Editor_TextChanging" Grid.Row="0" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" PlaceholderText="Text To Morse..." 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                     <Grid Grid.Row="1" x:Name="MorseGrid">
+                        <Grid.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Padding" Value="8"/>
+                                <Setter Property="Margin" Value="4"/>
+                                <Setter Property="CornerRadius" Value="16"/>
+                            </Style>
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="EditorMorse" Style="{StaticResource TextBoxStyle}" IsReadOnly="True" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" TextChanging="EditorMorse_TextChanging" 
                                      ScrollViewer.VerticalScrollBarVisibility="Auto" BeforeTextChanging="EditorMorse_BeforeTextChanging"/>
-                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" x:Name="PlayPauseStackPanel">
-                            <Button Margin="8,4" Tapped="PlayPauseButton_Tapped">
+                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" x:Name="PlayPauseStackPanel" Margin="0,0,8,0">
+                            <Button Tapped="PlayPauseButton_Tapped">
                                 <SymbolIcon Symbol="Play"/>
                             </Button>
-                            <Button Margin="8,4" Tapped="StopButton_Tapped">
+                            <Button Tapped="StopButton_Tapped">
                                 <SymbolIcon Symbol="Stop"/>
                             </Button>
                         </StackPanel>

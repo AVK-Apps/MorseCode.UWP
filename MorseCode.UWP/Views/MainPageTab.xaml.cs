@@ -1,5 +1,7 @@
 ﻿using MorseCode.UWP.Classes;
+using MorseCode.UWP.Dialogs;
 using MorseCodeToAudio;
+using System;
 using System.Linq;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -114,5 +116,9 @@ namespace MorseCode.UWP.Views
         {
             PauseMediaPlayer();
         }
+
+        private async void LearnButton_Click(object sender, RoutedEventArgs e) => await new DialogLearn() { Settings = Settings }.ShowAsync();
+
+        private async void Button_Click(object sender, RoutedEventArgs e) => await new DialogAbout().ShowAsync();
     }
 }
