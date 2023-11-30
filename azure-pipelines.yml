@@ -30,7 +30,7 @@ steps:
   displayName: 'Copy Files to: MorseCode.UWP'
   inputs:
     SourceFolder: '$(Agent.TempDirectory)'
-    Contents: Resources.UWP.pfx
+    Contents: MorseCode.UWP.pfx
     TargetFolder: MorseCode.UWP/
 - powershell: |
    $pfxpath = 'MorseCode.UWP/MorseCode.UWP.pfx'
