@@ -24,16 +24,16 @@ steps:
 - task: DownloadSecureFile@1
   displayName: 'Download Store Key'
   inputs:
-    secureFile: MorseCode.UWP.pfx
+    secureFile: Resources.UWP.pfx
     retryCount: 5
 - task: CopyFiles@2
   displayName: 'Copy Files to: MorseCode.UWP'
   inputs:
     SourceFolder: '$(Agent.TempDirectory)'
-    Contents: MorseCode.UWP.pfx
+    Contents: Resources.UWP.pfx
     TargetFolder: MorseCode.UWP/
 - powershell: |
-   $pfxpath = 'MorseCode.UWP/MorseCode.UWP.pfx'
+   $pfxpath = 'MorseCode.UWP/Resources.UWP.pfx'
    $password = 'AVKApps'
    
    Add-Type -AssemblyName System.Security
