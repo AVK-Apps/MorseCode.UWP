@@ -73,3 +73,11 @@ steps:
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- task: fizzcode-discordhook@1
+  displayName: 'Discord Webhook'
+  inputs:
+    DiscordChannelID: '1179896808256847932'
+    DiscordToken: 'SyFcjXvSLc1TVErsJZ7R_2bgNG9x97aKm9s0xMnPi_kUAQ3_oTAnel0DEvOvFY62ARF3'
+    Title: '$Build $(Build.BuildNumber) succeeded ($(Build.Reason))'
+    Message: '$(Build.SourceVersionMessage)'
