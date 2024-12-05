@@ -61,7 +61,7 @@
             <Button x:Name="StopButton" Grid.Row="1" Tapped="StopButton_Tapped" Grid.Column="1" ToolTipService.ToolTip="Stop Morse Playback">
                 <SymbolIcon Symbol="Stop"  />
             </Button>
-            <ToggleButton Grid.Row="2" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" x:Name="ButtonSwitch" ToolTipService.ToolTip="Switch Translation Type">
+            <ToggleButton Grid.Row="2" Checked="SwitchButton_Checked" Unchecked="SwitchButton_Unchecked" x:Name="ButtonSwitch" ToolTipService.ToolTip="Switch Translation Type">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE13C;" />
                 <ToggleButton.RenderTransform>
                     <RotateTransform Angle="90" CenterX="21" CenterY="21"/>

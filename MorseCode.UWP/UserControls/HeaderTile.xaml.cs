@@ -1,7 +1,6 @@
 ﻿using MorseCode.UWP.Classes;
 using Windows.Media.Core;
 using Windows.Media.Playback;
-using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -10,8 +9,6 @@ namespace MorseCode.UWP.UserControls
 {
     public sealed partial class HeaderTile : UserControl
     {
-        private SpringVector3NaturalMotionAnimation _springAnimation;
-
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
@@ -19,7 +16,7 @@ namespace MorseCode.UWP.UserControls
         }
 
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(HeaderTile), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Title), typeof(string), typeof(HeaderTile), new PropertyMetadata(string.Empty));
 
         public string Description
         {
@@ -28,9 +25,8 @@ namespace MorseCode.UWP.UserControls
         }
 
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(string), typeof(HeaderTile), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Description), typeof(string), typeof(HeaderTile), new PropertyMetadata(string.Empty));
 
-        MediaPlayer mediaPlayer;
         public HeaderTile()
         {
             InitializeComponent();
@@ -41,7 +37,7 @@ namespace MorseCode.UWP.UserControls
             MemoryRandomAccessStream randomAccessStream = MorseHelper.GenerateMorsePlayBack((sender as Button).Tag.ToString(), App.Settings);
             if (randomAccessStream != null)
             {
-                mediaPlayer = new MediaPlayer
+                MediaPlayer mediaPlayer = new MediaPlayer
                 {
                     Source = MediaSource.CreateFromStream(randomAccessStream, "wav")
                 };

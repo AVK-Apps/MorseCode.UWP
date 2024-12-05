@@ -146,6 +146,7 @@
     <Compile Include="UserControls\HeaderTile.xaml.cs">
       <DependentUpon>HeaderTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainPage.CommonEvents.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
