@@ -9,7 +9,7 @@
   <Identity
     Name="8704AVKApps.MorseAlphabets"
     Publisher="CN=4D46A311-D1FD-47AA-8C1B-712220118D6A"
-    Version="1.1.11.0" />
+    Version="2.6.12.0" />
 
   <mp:PhoneIdentity PhoneProductId="739b8216-9056-4b97-b97c-59ae27582631" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
