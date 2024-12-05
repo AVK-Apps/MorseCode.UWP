@@ -7,7 +7,7 @@ namespace MorseCode.UWP.Classes
     public class SettingsHelper
     {
         private static readonly string SettingsFileName = "SettingsValue";
-        private static readonly LocalObjectStorageHelper localObjectStorageHelper = new LocalObjectStorageHelper(new JsonObjectSerializer());
+        private static readonly ApplicationDataStorageHelper ApplicationDataStorageHelper = ApplicationDataStorageHelper.GetCurrent(new JsonObjectSerializer());
         public Settings Settings { get; set; }
 
         public static async Task<Settings> GetSettings()
@@ -15,7 +15,7 @@ namespace MorseCode.UWP.Classes
             Settings result;
             try
             {
-                result = await localObjectStorageHelper.ReadFileAsync<Settings>(SettingsFileName);
+                result = await ApplicationDataStorageHelper.ReadFileAsync<Settings>(SettingsFileName);
             }
             catch (Exception)
             {
@@ -33,7 +33,7 @@ namespace MorseCode.UWP.Classes
         {
             if (settings != null)
             {
-                _ = await localObjectStorageHelper.SaveFileAsync(SettingsFileName, settings);
+                await ApplicationDataStorageHelper.CreateFileAsync(SettingsFileName, settings);
             }
         }
     }
