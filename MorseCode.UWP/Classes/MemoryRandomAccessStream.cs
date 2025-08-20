@@ -51,7 +51,14 @@ namespace MorseCode.UWP.Classes
 
         public IRandomAccessStream CloneStream()
         {
-            throw new NotSupportedException();
+            if (m_InternalStream is MemoryStream memoryStream)
+            {
+                var buffer = memoryStream.ToArray();
+                var clone = new MemoryRandomAccessStream(buffer);
+                clone.Seek((ulong)memoryStream.Position);
+                return clone;
+            }
+            throw new NotSupportedException("CloneStream is only supported for MemoryStream.");
         }
 
         public ulong Position

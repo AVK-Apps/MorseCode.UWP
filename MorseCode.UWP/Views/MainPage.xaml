@@ -4,12 +4,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:usercontrols="using:MorseCode.UWP.UserControls"
     mc:Ignorable="d" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
+    <Page.Resources>
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="16" CornerRadius="8"/>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
@@ -22,16 +26,14 @@
             <ColumnDefinition Width="78" />
         </Grid.ColumnDefinitions>
         <ItemsControl ItemsSource="Morse Alphabets" VerticalAlignment="Center" Grid.RowSpan="3" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundAccentBrush }" FontFamily="Courier New" FontSize="{StaticResource TextStyleExtraLargeFontSize}"/>
-        <controls:DropShadowPanel Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" CornerRadius="8">
-            <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" CornerRadius="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBox x:Name="Editor" Style="{StaticResource TextBoxStyle}" TextChanging="Editor_TextChanging" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" PlaceholderText="Text To Morse..." ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                <TextBox x:Name="EditorMorse" Style="{StaticResource TextBoxStyle}" IsReadOnly="True" Grid.Row="1" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" TextChanging="EditorMorse_TextChanging" ScrollViewer.VerticalScrollBarVisibility="Auto" BeforeTextChanging="EditorMorse_BeforeTextChanging"/>
-            </Grid>
-        </controls:DropShadowPanel>
+        <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Grid.Column="1" Grid.Row="1" ui:Effects.Shadow="{StaticResource CommonShadow}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox x:Name="Editor" Style="{StaticResource TextBoxStyle}" TextChanging="Editor_TextChanging" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" PlaceholderText="Text To Morse..." ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="EditorMorse" Style="{StaticResource TextBoxStyle}" IsReadOnly="True" Grid.Row="1" FontSize="{Binding ElementName=FontSizeSlider, Path=Value}" TextChanging="EditorMorse_TextChanging" ScrollViewer.VerticalScrollBarVisibility="Auto" BeforeTextChanging="EditorMorse_BeforeTextChanging"/>
+        </Grid>
         <Grid HorizontalAlignment="Center" Grid.RowSpan="3" Grid.Column="2" VerticalAlignment="Center">
             <Grid.Resources>
                 <Style TargetType="Button">
@@ -67,22 +69,22 @@
                     <RotateTransform Angle="90" CenterX="21" CenterY="21"/>
                 </ToggleButton.RenderTransform>
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="Checked">
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="IsReadOnly" Value="True" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="PlaceholderText" Value="" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="Text" Value="" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="IsReadOnly" Value="False" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="PlaceholderText" Value="Morse To Text..." />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="Text" Value="" />
-                    </Core:EventTriggerBehavior>
-                    <Core:EventTriggerBehavior EventName="Unchecked">
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="IsReadOnly" Value="True" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="PlaceholderText" Value="" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="Text" Value="" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="IsReadOnly" Value="False" />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="PlaceholderText" Value="Text To Morse..." />
-                        <Core:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="Text" Value="" />
-                    </Core:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="Checked">
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="IsReadOnly" Value="True" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="PlaceholderText" Value="" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="Text" Value="" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="IsReadOnly" Value="False" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="PlaceholderText" Value="Morse To Text..." />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="Text" Value="" />
+                    </Interactivity:EventTriggerBehavior>
+                    <Interactivity:EventTriggerBehavior EventName="Unchecked">
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="IsReadOnly" Value="True" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="PlaceholderText" Value="" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=EditorMorse}" PropertyName="Text" Value="" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="IsReadOnly" Value="False" />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="PlaceholderText" Value="Text To Morse..." />
+                        <Interactivity:ChangePropertyAction TargetObject="{Binding ElementName=Editor}" PropertyName="Text" Value="" />
+                    </Interactivity:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </ToggleButton>
             <Button x:Name="SettingsButton" Grid.Row="3" ToolTipService.ToolTip="Settings">
